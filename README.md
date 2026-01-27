@@ -152,6 +152,8 @@ docker-compose down
 docker-compose down -v
 ```
 
+<img width="1600" height="880" alt="image" src="https://github.com/user-attachments/assets/a3874fd6-917d-4c02-8970-3664710c2bb9" />
+
 ---
 
 ## 🔑 Environment Variables
