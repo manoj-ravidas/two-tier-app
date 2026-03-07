@@ -1,0 +1,21 @@
+name: docker build
+on:
+  workflow_dispatch: 
+jobs:
+  dockerizing-the-two-tier-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: docker-build-push
+        uses: docker/login-actions@v4
+        with:
+          username: ${{ vars.GITHUB_USER }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: build - push
+        uses: docker/build-push-actions@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ vars.GITHUB_USER }}//github-actions-practice:latest
