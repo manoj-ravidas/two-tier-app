@@ -1,6 +1,6 @@
 name: docker build
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
 jobs:
   dockerizing-the-two-tier-app:
     runs-on: ubuntu-latest
@@ -18,4 +18,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ vars.DOCKER_USER }}/github-actions-practice:latest
+          tags: |
+            ${{ vars.DOCKER_USER }}/github-actions-practice:latest
+            ${{ vars.DOCKER_USER }}/github-actions-practice:${{ github.sha }}
+            ${{ vars.DOCKER_USER }}/github-actions-practice:${{ github.ref_name }}
