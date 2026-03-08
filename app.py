@@ -5,9 +5,11 @@ import os
 from flask_bcrypt import Bcrypt
 from functools import wraps
 
+
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-this')
 bcrypt = Bcrypt(app)
+
 
 # Database configuration
 DB_CONFIG = {
@@ -18,6 +20,7 @@ DB_CONFIG = {
     'database': os.environ.get('MYSQL_DB', 'mydb')
 }
 
+
 def get_db_connection():
     """Create and return database connection"""
     try:
@@ -26,6 +29,7 @@ def get_db_connection():
     except Error as e:
         print(f"Error connecting to MySQL: {e}")
         return None
+
 
 def init_db():
     """Initialize database and create tables if they don't exist"""
@@ -362,6 +366,7 @@ def view_deleted():
     return render_template('deleted.html', todos=deleted_todos)
 
 
+
 if __name__ == '__main__':
     init_db()  # Initialize database on startup
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(port=5000)
