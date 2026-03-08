@@ -5,28 +5,28 @@ on:
             - main
     workflow_dispatch:
 jobs:
-    code-quality:
+    code-quality-scan:
         uses: ./.github/workflows/code-quality.yml
 
-    dependency-check:
-        uses: ./.github/workflows/dependency-check.yml
+    dependency-check-scan:
+        uses: ./.github/workflows/dependencies-scan.yml
 
     image-scan:
-        uses: ./.github/workflows/image-vulnerability-scan.yml
+        uses: ./.github/workflows/image-scan.yml
 
     dockerfile-scan:
         uses: ./.github/workflows/dockerfile-scan.yml
 
-    secret-scan:
-        uses: ./.github/workflows/secret-scan.yml
+    secrets-scan:
+        uses: ./.github/workflows/secrets-scan.yml
 
     deploy-to-prod-server:
         needs:
             [
-                code-quality,
-                dependency-check,
+                code-quality-scan,
+                dependency-check-scan,
                 dockerfile-scan,
-                secret-scan,
+                secrets-scan,
                 image-scan,
             ]
         uses: ./.github/workflows/deploy-to-prod-server.yml
