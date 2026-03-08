@@ -14,3 +14,4 @@ jobs:
                   username: ${{ secrets.EC2.PROD_SERVER_SSH_USER }}
                   script: |
                       echo "Tests are done and we are deploying to prod server"
+                      mkdir -p devops
