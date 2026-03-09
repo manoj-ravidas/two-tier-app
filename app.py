@@ -82,7 +82,9 @@ def log_auth_action(action, user_id=None, username_attempted=None):
             cursor = connection.cursor()
             ip = request.remote_addr
             cursor.execute(
-                "INSERT INTO auth_logs (user_id, action, ip_address, username_attempted) VALUES (%s, %s, %s, %s)",
+                "INSERT INTO auth_logs "
+                "(user_id, action, ip_address, username_attempted) "
+                "VALUES (%s, %s, %s, %s)",
                 (user_id, action, ip, username_attempted)
             )
             connection.commit()
@@ -123,7 +125,8 @@ def register():
             try:
                 cursor = connection.cursor()
                 cursor.execute(
-                    "INSERT INTO users (username, email, password_hash) VALUES (%s, %s, %s)",
+                    "INSERT INTO users (username, email, password_hash) "
+                    "VALUES (%s, %s, %s)",
                     (username, email, password_hash)
                 )
                 connection.commit()
@@ -217,7 +220,8 @@ def index():
         try:
             cursor = connection.cursor(dictionary=True)
             cursor.execute(
-                "SELECT * FROM todos WHERE user_id = %s AND deleted = FALSE ORDER BY created_at DESC",
+                "SELECT * FROM todos WHERE user_id = %s"
+                " AND deleted = FALSE ORDER BY created_at DESC",
                 (session['user_id'],)
             )
             todos = cursor.fetchall()
@@ -272,7 +276,8 @@ def complete_todo(todo_id):
         try:
             cursor = connection.cursor()
             cursor.execute(
-                "UPDATE todos SET status = 'completed' WHERE id = %s AND user_id = %s",
+                "UPDATE todos SET status = 'completed' "
+                "WHERE id = %s AND user_id = %s",
                 (todo_id, session['user_id'])
             )
             connection.commit()
@@ -328,7 +333,8 @@ def delete_todo(todo_id):
         try:
             cursor = connection.cursor()
             cursor.execute(
-                "UPDATE todos SET deleted = TRUE, deleted_at = NOW() WHERE id = %s AND user_id = %s",
+                "UPDATE todos SET deleted = TRUE, deleted_at = NOW()"
+                " WHERE id = %s AND user_id = %s",
                 (todo_id, session['user_id'])
             )
             connection.commit()
@@ -365,7 +371,8 @@ def view_deleted():
         try:
             cursor = connection.cursor(dictionary=True)
             cursor.execute(
-                "SELECT * FROM todos WHERE deleted = TRUE AND user_id = %s ORDER BY deleted_at DESC",
+                "SELECT * FROM todos WHERE deleted = TRUE AND user_id = %s "
+                "ORDER BY deleted_at DESC",
                 (session['user_id'],)
             )
             deleted_todos = cursor.fetchall()
