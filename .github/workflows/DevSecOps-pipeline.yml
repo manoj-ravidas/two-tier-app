@@ -9,7 +9,11 @@ jobs:
     dependency-check-scan:
         uses: ./.github/workflows/dependencies-scan.yml
 
+    docker-build-push:
+        uses: ./.github/workflows/docker-build-push.yml
+        secrets: inherit
     image-scan:
+        needs: [docker-build-push] # waits for new image before scanning
         uses: ./.github/workflows/image-scan.yml
         secrets: inherit
 
