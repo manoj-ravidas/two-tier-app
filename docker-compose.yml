@@ -22,7 +22,7 @@ services:
 
   flask-app:
     build: .
-    image: ${{DOCKER_USER }}/flask-image:latest
+    image: ${{DOCKER_USER }}/flask-image:${DOCKER_TAG}
     container_name: two-tier-flask-app
     restart: unless-stopped
     ports:
