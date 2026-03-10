@@ -1,6 +1,9 @@
 name: docker build
 on:
   workflow_call:
+    secrets:
+      DOCKER_PASSWORD:
+        required: true
 jobs:
   dockerizing-the-two-tier-app:
     runs-on: ubuntu-latest

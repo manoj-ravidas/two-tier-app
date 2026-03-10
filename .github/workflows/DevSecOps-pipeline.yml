@@ -1,7 +1,6 @@
 name: DevSecOps end-to-end workflow
 on:
-    push:
-        branches: [main]
+    workflow_dispatch:
 jobs:
     code-quality-scan:
         uses: ./.github/workflows/code-quality.yml
@@ -15,8 +14,12 @@ jobs:
     dockerfile-scan:
         uses: ./.github/workflows/dockerfile-scan.yml
 
-    deploy-app:
-        uses: ./.github/workflows/deploy-app.yml
+    deploy-to-prod-server:
+        needs: [image-scan]
+        uses: ./.github/workflows/deploy-to-prod-server.yml
+        with:
+            docker-tag: ${{ github.sha }}
+        secrets: inherit
 
     docker-build-push:
         needs:
@@ -25,7 +28,6 @@ jobs:
                 dockerfile-scan,
                 secrets-scan,
                 code-quality-scan,
-                deploy-app,
             ]
         uses: ./.github/workflows/docker-build-push.yml
         secrets: inherit
@@ -33,9 +35,4 @@ jobs:
     image-scan:
         needs: [docker-build-push]
         uses: ./.github/workflows/image-scan.yml
-        secrets: inherit
-
-    deploy-to-prod-server:
-        needs: [image-scan]
-        uses: ./.github/workflows/deploy-to-prod-server.yml
         secrets: inherit
