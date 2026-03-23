@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: todo-service
+  namespace: two-tier-ns
+
+spec:
+   selector:
+     app: two-tier-app
+   
+   ports:
+     - protocol: TCP
+       port: 8000
+       targetPort: 5000

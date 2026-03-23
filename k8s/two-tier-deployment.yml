@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: two-tier-deployment
+  namespace: two-tier-ns
+  labels:
+    app: two-tier-app
+
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: two-tier-app
+
+  template:
+    metadata:
+      name: todo-app-pod
+      namespace: two-tier-ns
+      labels:
+        app: two-tier-app
+
+    spec:
+      containers:
+        - name: todo-app-container
+          image: heyyprakhar1/two-tier-app:latest
+          ports:
+            - containerPort: 5000
